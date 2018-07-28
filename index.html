@@ -1,1 +1,102 @@
-<h1>Hello world!</h1>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>NATO phonetic translator</title>
+        <style>
+          body {
+            background: #20262E;
+            padding: 20px;
+            font-family: Helvetica;
+          }
+
+          #banner-message {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            font-size: 25px;
+            text-align: center;
+            transition: all 0.2s;
+            margin: 0 auto;
+            width: 300px;
+          }
+
+          #in {
+            width: 80%;
+          }
+        </style>
+    </head>
+    <body>
+        <div id="banner-message">
+            <input type="text" id="in" placeholder="Hello">
+            <p id="out"></p>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                // find elements
+                var input = $('#in');
+                var out = $('#out');
+
+                // https://en.wikipedia.org/wiki/NATO_phonetic_alphabet
+                NATO = {
+                    'a': 'Alfa',
+                    'b': 'Bravo',
+                    'c': 'Charlie',
+                    'd': 'Delta',
+                    'e': 'Echo',
+                    'f': 'Foxtrot',
+                    'g': 'Golf',
+                    'h': 'Hotel',
+                    'i': 'India',
+                    'j': 'Juliet',
+                    'k': 'Kilo',
+                    'l': 'Limo',
+                    'm': 'Mike',
+                    'n': 'November',
+                    'o': 'Oscar',
+                    'p': 'Papa',
+                    'q': 'Quebec',
+                    'r': 'Romeo',
+                    's': 'Sierra',
+                    't': 'Tango',
+                    'u': 'Uniform',
+                    'v': 'Victor',
+                    'w': 'Whiskey',
+                    'x': 'X-Ray',
+                    'y': 'Yankee',
+                    'z': 'Zulu',
+                };
+
+                function nato_translate(text) {
+                    return text
+                        .toLowerCase()
+                        .split('')
+                        .map(function(c) {
+                            return NATO[c] || c.toUpperCase(); });
+                }
+
+                function update(text) {
+                    // window.location.hash = '#' + text;
+                    out.html(nato_translate(text).join('<br/>'));
+                }
+
+                input.on('input', function() {
+                    update(this.value || input.attr('placeholder'));
+                });
+
+                /*
+                   TODO: add hash URL support
+                var href_hash = window.location.hash;
+                console.log('href_hash: ' + href_hash);
+                if (href_hash !== '') {
+                    input.val(href_hash.substr(1));
+                }
+                */
+
+                update(input.attr('placeholder'));
+            });
+        </script>
+    </body>
+</html>
